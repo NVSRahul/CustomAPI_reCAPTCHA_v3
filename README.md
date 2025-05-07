@@ -1,175 +1,161 @@
-# CustomAPI_reCAPTCHA_v3: reCAPTCHA v3 Form Protection & PDF Access Gate
+# 🛡️ CustomAPI_reCAPTCHA_v3: Secure Your Forms & Gate Content with Google reCAPTCHA v3
 
-## Description
+[![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Maven](https://img.shields.io/badge/Maven-3.x-orange.svg)](https://maven.apache.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <!-- Optional: Add a license if you have one -->
 
-This project demonstrates how to integrate Google reCAPTCHA v3 with a web form and, as a specific use case, protect access to a PDF link based on the verification. Users fill out a simple form (Name, Email, Company). Upon submission, reCAPTCHA v3 invisibly assesses the interaction. If the server-side verification (checking the reCAPTCHA score and action) is successful, the user is granted access to a PDF link.
+Stop spam and protect your resources! This project provides a clear, practical demonstration of integrating **Google reCAPTCHA v3** with a web form. It showcases how to:
+*   Secure any HTML form against bots and abuse using invisible, score-based verification.
+*   Gate access to valuable content (like a PDF download) until a user successfully passes the reCAPTCHA challenge.
 
-This serves as a practical example for:
-*   Implementing reCAPTCHA v3 for general form submissions to prevent spam and abuse.
-*   Gating access to specific resources (like a downloadable file) based on successful reCAPTCHA verification.
+Built with a **Spring Boot** backend and a clean **Vanilla JavaScript** frontend, it's designed to be easy to understand, set up, and adapt for your own projects.
 
-The backend is built with Spring Boot, and the frontend is a simple HTML, CSS, and JavaScript application.
+---
 
-## Features
+## ✨ Key Features
 
-*   **reCAPTCHA v3 Form Integration:** Demonstrates how to secure a standard web form using invisible reCAPTCHA v3.
-*   **Score-Based Access Control:** Server-side validation of the reCAPTCHA score against a configurable threshold.
-*   **Action Tag Verification:** Ensures the reCAPTCHA token was generated for the specific form submission action, enhancing security.
-*   **Use Case: Secure PDF Link Gating:** Provides an example of protecting a resource (PDF link) post-verification.
-*   **Simple Form Submission:** Collects basic user information.
-*   **Clear Frontend Feedback:** Provides status messages to the user during the verification process.
-*   **Spring Boot Backend:** Robust and scalable server-side logic for reCAPTCHA verification.
-*   **Vanilla JavaScript Frontend:** No complex frontend frameworks for this demo.
+*   **🤖 Invisible Form Protection:** Seamlessly secure your web forms with Google reCAPTCHA v3, without interrupting legitimate users.
+*   **💯 Score-Based Verification:** Leverage Google's risk analysis engine to get a score for each interaction, and make decisions on your server.
+*   **🎯 Action-Specific Security:** Use reCAPTCHA actions to tie verifications to specific user behaviors (e.g., `submit_form`), making it harder for attackers to misuse tokens.
+*   **📄 Content Gating Example:** A ready-to-run example of how to protect a PDF link, granting access only after successful verification.
+*   **📝 Simple Data Collection:** Includes a basic form to gather user details (Name, Email, Company).
+*   **💬 User-Friendly Feedback:** Clear status messages guide the user through the verification process.
+*   **☕ Robust Java Backend:** Powered by Spring Boot for a reliable and scalable server-side solution.
+*   **🌐 Lightweight Frontend:** Pure HTML, CSS, and JavaScript – no complex frameworks needed for this core functionality.
 
-## Technology Stack
+---
 
-*   **Backend:**
-    *   Java (Version 17+ recommended)
-    *   Spring Boot (Web, WebFlux for `WebClient`)
-    *   Maven (for dependency management)
-*   **Frontend:**
-    *   HTML5
-    *   CSS3
-    *   Vanilla JavaScript (ES6+)
-*   **reCAPTCHA:**
-    *   Google reCAPTCHA v3
+## 🛠️ Tech Stack
 
-## Prerequisites
+*   **Backend:** Java (17+), Spring Boot, Spring WebFlux (for `WebClient`), Maven
+*   **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+)
+*   **Verification:** Google reCAPTCHA v3
 
-*   **Java Development Kit (JDK):** Version 17 or higher.
-*   **Apache Maven:** For building the Spring Boot application.
-*   **Google reCAPTCHA v3 Keys:**
-    *   Go to the [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/).
-    *   Register a new site, selecting **reCAPTCHA v3**.
-    *   Add your domains (e.g., `localhost`, `127.0.0.1` for local testing, and your production domain).
-    *   Note down the **Site Key** and **Secret Key**.
-*   **A PDF File URL (for the PDF gating example):** The URL of the PDF you want to protect.
+---
 
-## Setup and Configuration
+## 🚀 Getting Started
 
-### 1. Clone the Repository
+### Prerequisites
+
+1.  **Java Development Kit (JDK):** Version 17 or higher.
+2.  **Apache Maven:** To build and run the Spring Boot application.
+3.  **Google reCAPTCHA v3 Keys:**
+    *   Visit the [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/).
+    *   Register a **new site**, choosing **reCAPTCHA v3**.
+    *   Ensure your domains (e.g., `localhost`, `127.0.0.1` for local tests, and your production domain) are added.
+    *   Safely store your **Site Key** and **Secret Key**.
+4.  **(Optional) PDF URL:** If you're using the PDF gating feature, have a URL for the PDF you wish to protect.
+
+### 1. Clone the Magic ✨
 
 ```bash
 git clone https://github.com/NVSRahul/CustomAPI_reCAPTCHA_v3.git
 cd CustomAPI_reCAPTCHA_v3
 ```
 
-### 2. Backend Configuration (Spring Boot)
+### 2. Configure Your Backend Secrets 🔒
 
-The main configuration file is `src/main/resources/application.properties`.
-
-You **MUST** update the following properties:
+Edit `src/main/resources/application.properties` with your details:
 
 ```properties
 # src/main/resources/application.properties
 
-# --- reCAPTCHA v3 Settings ---
-# 🚨 Replace with YOUR actual v3 Secret Key
+# === Google reCAPTCHA v3 ===
+# 🚨 YOUR V3 SECRET KEY - Keep this super secret!
 google.recaptcha.secret=YOUR_V3_SECRET_KEY_HERE
-
-# Define your score threshold (0.0 to 1.0) - Adjust based on testing
+# Minimum score (0.0-1.0) to pass. Adjust based on testing.
 google.recaptcha.v3.threshold=0.5
-# Define the expected action name from the frontend (should match JS)
+# Expected action from frontend (must match JS `grecaptcha.execute` action).
 google.recaptcha.v3.action=submit_form
 
-# --- PDF Content URL (for the PDF gating example) ---
-# 🚨 Replace with YOUR actual PDF URL
+# === PDF Gating Example ===
+# 🚨 URL of the PDF you want to protect.
 app.pdf.url=YOUR_ACTUAL_PDF_URL_HERE
+
+# Optional: Server port
+# server.port=8080
 ```
+**Important:** Your `google.recaptcha.secret` is confidential. Never commit it to a public repository. For production, use environment variables or a secure secret management tool.
 
-*   `google.recaptcha.secret`: Your reCAPTCHA v3 **Secret Key**. **Keep this secure and never expose it publicly.**
-*   `google.recaptcha.v3.threshold`: The minimum score (0.0 to 1.0) required for verification to pass. Start with `0.5` and adjust based on logs and testing.
-*   `app.pdf.url`: The direct URL to the PDF file you want to serve after successful verification (specific to the PDF gating use case).
+### 3. Configure Your Frontend Keys 🔑
 
-The backend server port is set to `8080` by default but can be changed in this file (`server.port=8080`).
-
-### 3. Frontend Configuration
-
-The main frontend files are `index.html`, `style.css`, and `script.js` (located in the project root for this simple setup).
-
-You **MUST** update the following in `index.html`:
+Open `index.html` and update it with your reCAPTCHA v3 **Site Key**:
 
 ```html
 <!-- index.html -->
 
-<!-- 🚨 reCAPTCHA v3 API Script - Replace YOUR_V3_SITE_KEY_HERE -->
+<!-- 🚨 Replace with YOUR V3 SITE KEY -->
 <script src="https://www.google.com/recaptcha/api.js?render=YOUR_V3_SITE_KEY_HERE"></script>
 <script>
-  // 🚨 Replace YOUR_V3_SITE_KEY_HERE again
+  // 🚨 Replace with YOUR V3 SITE KEY again
   const RECAPTCHA_V3_SITE_KEY = 'YOUR_V3_SITE_KEY_HERE';
 </script>
 ```
+If your backend isn't running on `http://localhost:8080`, also update `BACKEND_VERIFY_URL` in `script.js`.
 
-*   Replace `YOUR_V3_SITE_KEY_HERE` in **both** places with your reCAPTCHA v3 **Site Key**.
+### 4. Ignite the Engines! 🔥
 
-If your backend runs on a different URL or port, update `BACKEND_VERIFY_URL` in `script.js`:
-```javascript
-// script.js
-const BACKEND_VERIFY_URL = 'http://localhost:8080/api/verify-v3-submit';
-```
-
-## Running the Application
-
-### 1. Run the Backend (Spring Boot)
-
-Navigate to the project's root directory (where `pom.xml` is located) and run:
-
+**Start the Backend (Spring Boot):**
+In the project root directory:
 ```bash
 ./mvnw spring-boot:run
+# Or on Windows: mvnw.cmd spring-boot:run
 ```
-(On Windows, use `mvnw.cmd spring-boot:run`)
+Your backend should be live, typically at `http://localhost:8080`.
 
-The backend server should start, typically on `http://localhost:8080`. Check the console logs for the exact port and any startup messages.
-
-### 2. Run the Frontend
-
-Open the `index.html` file directly in your web browser (e.g., by double-clicking it or using a live server extension in your code editor like VS Code's "Live Server").
-
-*   Ensure your browser can make requests to `http://localhost:8080` (or wherever your backend is running). The `@CrossOrigin` annotation in `RecaptchaController.java` is configured for common local development origins, but you might need to adjust it for your specific setup or production environment.
-
-## How it Works
-
-1.  The user visits `index.html`.
-2.  The user fills in the Name, Email, and Company fields.
-3.  Upon clicking "Submit & Get PDF":
-    a.  JavaScript prevents the default form submission.
-    b.  `grecaptcha.execute()` is called with your v3 Site Key and an action `'submit_form'`. This returns a reCAPTCHA token.
-    c.  The frontend sends the reCAPTCHA `token` and the form data (`name`, `email`, `company`) to the backend API endpoint (`/api/verify-v3-submit`).
-4.  The Spring Boot backend:
-    a.  Receives the token and form data.
-    b.  Sends the `token` and your **v3 Secret Key** to Google's `siteverify` API.
-    c.  Google responds with a JSON object containing `success` (true/false), `score` (0.0-1.0), `action`, and `hostname`.
-    d.  The backend checks if:
-        i.  `success` is true.
-        ii. The `score` is greater than or equal to the configured `google.recaptcha.v3.threshold`.
-        iii. The `action` in Google's response matches the expected `google.recaptcha.v3.action` (e.g., `'submit_form'`).
-    e.  If all checks pass, the backend logs the form data (optional). For the PDF gating use case, it then responds to the frontend with `{ "success": true, "pdfUrl": "YOUR_CONFIGURED_PDF_URL" }`. If only form protection is needed, it could just respond with `{ "success": true }`.
-    f.  If any check fails, it responds with `{ "success": false, "reason": "Detailed error message" }` and an appropriate HTTP status code (e.g., 403 Forbidden).
-5.  The frontend JavaScript:
-    a.  If the backend response indicates success (and a `pdfUrl` is provided for the PDF use case), it displays the PDF viewer (`<iframe>`) and an active download link.
-    b.  If verification fails, it shows an error message to the user.
-
-## Important Notes & Security
-
-*   **Secret Key Security:** Your `google.recaptcha.secret` (v3 Secret Key) **must be kept confidential**. Do not commit it to public repositories. Use environment variables or a secure secrets management system for production deployments.
-*   **Site Key Exposure:** The reCAPTCHA Site Key is public and will be visible in your frontend JavaScript. This is by design.
-*   **Threshold Tuning:** The `google.recaptcha.v3.threshold` (default `0.5`) is crucial. Monitor the scores from legitimate users and potential bots (visible in your backend logs) to fine-tune this value. Too low might let bots through; too high might block legitimate users.
-*   **Action Specificity:** Using and verifying `action` tags provides context for the reCAPTCHA score and helps mitigate token theft or misuse across different parts of a site.
-*   **CORS:** The `@CrossOrigin` annotation in `RecaptchaController.java` allows requests from specified origins. Ensure this is configured correctly for your development and production frontend URLs.
-*   **HTTPS:** For production, always use HTTPS for both your frontend and backend to protect data in transit, including the reCAPTCHA token. reCAPTCHA itself works best over HTTPS.
-*   **PDF Security (Specific Use Case):** This example gates access to the *link*. If the PDF URL is guessable or becomes known, this system won't prevent direct access to that URL. For higher security on the PDF itself, consider:
-    *   Serving the PDF through a protected backend endpoint that checks for a valid session/token *before* streaming the file.
-    *   Using temporary, signed URLs if your PDF is hosted on a cloud storage service (like AWS S3, Google Cloud Storage).
-
-## (Optional) Future Enhancements
-
-*   Store submitted form data in a database.
-*   Send an email notification upon successful form submission.
-*   Implement more sophisticated error handling and user feedback.
-*   Add user authentication for an additional layer of security.
-*   If gating files, serve the file directly through a secured Spring Boot endpoint instead of just providing a URL.
+**Launch the Frontend:**
+Open `index.html` directly in your web browser. (Using a live server extension in your IDE is also a great option!)
 
 ---
 
-Feel free to contribute or report issues via the [Issues tab](https://github.com/NVSRahul/CustomAPI_reCAPTCHA_v3/issues)!
-```
+## ⚙️ How It Works: The Flow
+
+1.  **User Interaction:** User fills the form on `index.html`.
+2.  **Token Generation:** On submit, JavaScript calls `grecaptcha.execute()` with your Site Key and an `action` (e.g., `'submit_form'`) to get a secure token.
+3.  **API Call:** The frontend sends this token and form data to your Spring Boot backend (`/api/verify-v3-submit`).
+4.  **Server-Side Verification (The Crucial Step!):**
+    *   Your backend sends the token and your **Secret Key** to Google's `siteverify` API.
+    *   Google assesses the interaction and returns a `success` status, a `score` (0.0-1.0), the `action` it observed, and other details.
+    *   Your backend rigorously checks:
+        *   Is `success` true?
+        *   Is the `score` >= your defined `threshold`?
+        *   Does the `action` match what you expected?
+5.  **Access Granted (or Denied):**
+    *   ✅ **If all checks pass:** The backend confirms success. For the PDF example, it returns the `pdfUrl`.
+    *   ❌ **If any check fails:** Access is denied, and an error message is provided.
+6.  **Frontend Update:** JavaScript updates the page to show the PDF (if applicable) or an error message.
+
+---
+
+## 💡 Important Considerations
+
+*   **Secret Key is SACRED:** Guard your `google.recaptcha.secret`. It's the key to your castle.
+*   **Site Key is Public:** It's meant to be in your frontend code.
+*   **Tune Your Threshold:** The `google.recaptcha.v3.threshold` is a balancing act. Monitor scores (check backend logs!) to find the sweet spot for your traffic.
+*   **Actions Add Context:** Always use and verify `action` tags. They make your reCAPTCHA setup much stronger.
+*   **CORS & HTTPS:** Configure Cross-Origin Resource Sharing (`@CrossOrigin`) correctly. Always use HTTPS in production for security.
+*   **Beyond the Link (PDF Security):** This example gates the *link*. For truly secure file access, consider serving files through a protected backend endpoint or using temporary signed URLs.
+
+---
+
+## 🌱 Future Possibilities
+
+*   Persist form submissions to a database.
+*   Trigger email notifications.
+*   Implement full user authentication.
+*   Serve files directly and securely via Spring Boot.
+
+---
+
+## 🤝 Contributing & Issues
+
+Found a bug or have an idea? Feel free to:
+*   Open an [Issue](https://github.com/NVSRahul/CustomAPI_reCAPTCHA_v3/issues)
+*   Submit a Pull Request
+
+We appreciate your contributions!
+
+---
+
+Happy Coding! 🚀
