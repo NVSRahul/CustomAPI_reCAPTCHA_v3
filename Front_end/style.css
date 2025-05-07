@@ -1,0 +1,79 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+form label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 95%;
+    max-width: 380px;
+}
+
+.initially-hidden {
+    display: none;
+}
+
+.button {
+    display: inline-block; /* Needed for link styling */
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white !important;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    text-align: center;
+    text-decoration: none; /* For link button */
+}
+
+.button:hover:not(.disabled) {
+    background-color: #0056b3;
+}
+
+.button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #6c757d;
+}
+
+#status-message {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+#status-message.error {
+    color: #dc3545; /* Bootstrap danger color */
+}
+
+#status-message.success {
+    color: #28a745; /* Bootstrap success color */
+}
+
+.pdf-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.download-area {
+    margin-top: 20px;
+}
+
+iframe {
+    border: 1px solid #eee;
+    width: 100%; /* Make iframe responsive */
+    max-width: 800px; /* Limit max width */
+}

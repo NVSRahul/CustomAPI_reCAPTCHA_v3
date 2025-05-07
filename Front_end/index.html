@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reCAPTCHA v3 PDF Gate Test</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- 🚨 reCAPTCHA v3 API Script - Replace YOUR_V3_SITE_KEY_HERE -->
+  <script src="https://www.google.com/recaptcha/api.js?render=YOUR_V3_SITE_KEY_HERE"></script>
+  <script>
+    // 🚨 Replace YOUR_V3_SITE_KEY_HERE again
+    const RECAPTCHA_V3_SITE_KEY = 'YOUR_V3_SITE_KEY_HERE';
+  </script>
+</head>
+<body>
+
+<h1>PDF Access</h1>
+<p>Please fill out the form and submit to verify and get the PDF link.</p>
+
+<form id="pdf-request-form" style="margin-bottom: 20px; max-width: 400px;">
+  <div style="margin-bottom: 10px;">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required style="width: 95%;">
+  </div>
+  <div style="margin-bottom: 10px;">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required style="width: 95%;">
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="company">Company (Optional):</label><br>
+    <input type="text" id="company" name="company" style="width: 95%;">
+  </div>
+  <button type="submit" id="submit-button" class="button">Submit & Get PDF</button>
+</form>
+
+<div id="status-message" style="margin-bottom: 20px; min-height: 1.2em;"></div>
+
+<div class="pdf-container initially-hidden">
+  <h2>PDF Viewer</h2>
+  <iframe id="pdf-viewer" src="" title="PDF Viewer" width="80%" height="500px">
+    <p>Your browser does not support embedded PDFs.</p>
+  </iframe>
+</div>
+
+<div class="download-area initially-hidden">
+  <a id="download-link" href="#" target="_blank" rel="noopener noreferrer" class="button disabled" style="text-decoration: none;">Download PDF</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
